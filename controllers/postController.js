@@ -15,6 +15,16 @@ exports.createPost = function (req, res) {
     })
 }
 
+exports.apiCreate= function (req, res) {
+  let post = new Post(req.body, req.apiUser._id)
+  post.create().then(function(newId) {
+    res.json("Congrats.")
+  }).catch(function(errors) {
+      res.json(errors)
+  })
+}
+
+
 exports.viewSingle = async function(req, res) {
   try {
     let post = await Post.findSingleById(req.params.id, req.visitorId)
@@ -70,6 +80,14 @@ exports.delete = function(req, res) {
   }).catch(() => {
     req.flash('errors', "You donot have permission to delete this post.")
     req.session.save(() => res.redirect('/'))
+  })
+}
+
+exports.apiDelete = function(req, res) {
+  Post.delete(req.params.id, req.apiUser._id).then(() => {
+    res.json("Successfully deleted!")  
+  }).catch(() => {
+    res.json("You cannot delete this post due to limited permission.")
   })
 }
 
