@@ -18,6 +18,7 @@ Registration, Follow, Posts, Comment, Explore, Chat
 * Bcrypt
 * MongoDB
 * Csurf
+* SendGrid
 
 For API configuration check: 'router-api.js'
 
